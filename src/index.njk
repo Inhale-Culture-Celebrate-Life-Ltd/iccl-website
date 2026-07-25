@@ -1,14 +1,17 @@
 ---
 permalink: index.html
+canonical_path: /
 title: ICCL — Inhale Culture, Celebrate Life
-description: Inhale Culture Celebrate Life Ltd is a registered Australian charity producing festivals and cultural programs celebrating multicultural Australia. Producer of MOMO Fest Melbourne 2026.
+description: Inhale Culture Celebrate Life Ltd is a registered Australian charity creating public festivals and cultural experiences that bring communities together.
 og_title: ICCL — Inhale Culture, Celebrate Life
-og_description: A registered Australian charity producing festivals and cultural programs that celebrate multicultural Australia.
+og_description: A registered Australian charity creating public festivals and cultural experiences that bring communities together.
 og_type: website
 currentPage: home
 sitemap_priority: "1.0"
 ---
 {% extends "base.njk" %}
+
+{% set upcomingFestival = festivals | findBySlug("melbourne-international-dumpling-festival-2026") %}
 
 {% block jsonld %}
 <script type="application/ld+json">
@@ -19,12 +22,12 @@ sitemap_priority: "1.0"
   "url": "{{ canonical_url }}",
   "name": "{{ title }}",
   "description": "{{ description }}",
-  "isPartOf": { "@id": "{{ site.url }}/#website" },
-  "about": { "@id": "{{ site.url }}/#organization" },
+  "isPartOf": { "@id": "{{ organization_url }}#website" },
+  "about": { "@id": "{{ organization_url }}#organization" },
   "primaryImageOfPage": {
     "@type": "ImageObject",
-    "url": "{{ site.url }}/assets/Hero-image.jpg",
-    "caption": "MOMO Fest Melbourne 2026 — festival scene at Footscray Park"
+    "url": "{{ site.url }}{{ '/assets/Hero-image.jpg' | url }}",
+    "caption": "ICCL organisers and volunteers on stage at MOMO Fest Melbourne 2026"
   },
   "inLanguage": "en-AU"
 }
@@ -32,28 +35,25 @@ sitemap_priority: "1.0"
 {% endblock %}
 
 {% block content %}
-  <!-- Hero -->
   <section class="hero">
     <div class="hero-grid">
       <div class="hero-copy">
         <p class="eyebrow">Inhale Culture Celebrate Life Ltd · est. 2025</p>
         <h1>Inhale<br>culture.<br><em>Celebrate life.</em></h1>
-        <p class="hero-sub">A registered Australian charity producing festivals, food and public cultural programs that bring multicultural Melbourne — and the rest of Australia — together.</p>
+        <p class="hero-sub">ICCL is a registered Australian charity creating public festivals and cultural experiences that bring communities together through food, music, performance and shared celebration.</p>
         <div class="hero-actions">
-          <a href="festival.html" class="btn btn-primary">MOMO Fest 2026 recap <span class="ar">→</span></a>
-          <a href="about.html" class="btn btn-ghost">About ICCL</a>
+          <a href="{{ '/festivals/' | url }}" class="btn btn-primary">Explore our festivals <span class="ar" aria-hidden="true">→</span></a>
+          <a href="{{ '/about.html' | url }}" class="btn btn-ghost">About ICCL</a>
         </div>
       </div>
 
       <div class="hero-media">
-        <img src="assets/Hero-image.jpg"
-             alt="Crowd at MOMO Fest Melbourne 2026, ICCL's flagship multicultural festival at Footscray Park"
-             width="1080" height="1350" fetchpriority="high">
-        <span class="hero-tag">MOMO Fest 2026 · Recap</span>
+        {% responsiveImage "/assets/Hero-image.jpg", "ICCL organisers and volunteers on stage at MOMO Fest Melbourne 2026", "(max-width: 920px) 100vw, 48vw", "hero-photo", "eager", "high" %}
+        <span class="hero-tag">ICCL · Festivals &amp; cultural programs</span>
       </div>
     </div>
 
-    <div class="hero-meta">
+    <div class="hero-meta" aria-label="ICCL organisation details">
       <dl class="hero-meta-inner">
         <div>
           <dt>Founded</dt>
@@ -68,133 +68,74 @@ sitemap_priority: "1.0"
           <dd>Registered charity</dd>
         </div>
         <div>
-          <dt>Latest event</dt>
-          <dd>MOMO Fest · Apr 2026</dd>
+          <dt>Coming next</dt>
+          <dd>{{ upcomingFestival.name }} · November 2026</dd>
         </div>
       </dl>
     </div>
   </section>
 
-  <div class="flagband" aria-hidden="true">
-    <span></span><span></span><span></span><span></span><span></span>
-  </div>
-
-  <!-- Recent flagship event -->
-  <section class="section featured">
-    <div class="featured-grid">
-      <div class="featured-media">
-        <img src="assets/Momofest-image.jpg"
-             alt="MOMO Fest 2026 — plate of Nepali momo served at Footscray Park"
-             width="1080" height="1350" loading="lazy">
-      </div>
-      <div class="featured-copy">
-        <span class="past-banner">Past event · April 2026</span>
-        <h2>MOMO Fest<br>Melbourne <em>2026</em></h2>
-        <p class="lede">ICCL's flagship festival — a free public celebration of MOMO, the beloved Nepali and Himalayan dumpling, alongside the music, performance and food of multicultural Melbourne. Two days, one park, everyone welcome.</p>
-
-        <div class="featured-meta">
-          <div>
-            <div class="label">Dates</div>
-            <div class="val">11–12 April 2026</div>
-          </div>
-          <div>
-            <div class="label">Hours</div>
-            <div class="val">12pm – 10pm daily</div>
-          </div>
-          <div>
-            <div class="label">Venue</div>
-            <div class="val">Footscray Park, VIC</div>
-          </div>
-          <div>
-            <div class="label">Entry</div>
-            <div class="val">Free entry</div>
-          </div>
-        </div>
-
-        <div class="hero-actions">
-          <a href="festival.html" class="btn btn-accent">Festival recap <span class="ar">→</span></a>
-          <a href="https://www.facebook.com/iccl.org.au" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">Follow for updates</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Future events -->
-  <section class="section" id="future" style="background: var(--bg);">
-    <div class="section-head">
+  <section class="section festival-portfolio festival-portfolio--home" id="upcoming-festival" aria-labelledby="festival-heading">
+    <div class="section-head section-head--feature">
       <div>
-        <p class="eyebrow">Looking ahead</p>
-        <h2>Future <em>events.</em></h2>
+        <p class="eyebrow">Upcoming festival · November 2026</p>
+        <h2 id="festival-heading">Our <em>festivals.</em></h2>
       </div>
-      <p class="lede">MOMO Fest will return — and ICCL is planning new cultural programs alongside it. Specific dates and venues will be announced as they are confirmed.</p>
+      <p class="lede">ICCL presents distinct public festivals under their own identities, bringing communities together through food, performance and shared cultural experience.</p>
     </div>
 
-    <div class="future">
-      <div class="future-card">
-        <span class="stamp">Coming soon</span>
-        <h3>Next edition <em>to be announced.</em></h3>
-        <p>Follow ICCL on Facebook or email the events team to be the first to hear about the next MOMO Fest, partnership opportunities and upcoming ICCL programs.</p>
-        <div class="hero-actions">
-          <a href="https://www.facebook.com/iccl.org.au" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Follow on Facebook <span class="ar">→</span></a>
-          <a href="mailto:events@iccl.org.au" class="btn btn-ghost">events@iccl.org.au</a>
-        </div>
-        <div class="meta-row">
-          <span class="dot"></span>
-          <span>Updates via Facebook &amp; email</span>
-        </div>
-      </div>
+    <div class="festival-list">
+      {% for festival in festivals %}
+        {% include "festival-card.njk" %}
+      {% endfor %}
     </div>
   </section>
 
-  <!-- What we do -->
-  <section class="section work">
-    <div class="work-head">
-      <div>
-        <p class="eyebrow">What we do</p>
-        <h2>Three things,<br>done <em>with care.</em></h2>
-      </div>
-      <p class="lede">ICCL exists to advance culture in Australia. We do that in three ways — and we keep our focus narrow on purpose, so each program lands with the depth it deserves.</p>
+  <section class="section work" aria-labelledby="work-heading">
+    <div class="plain-section-head">
+      <p class="section-label">What ICCL does</p>
+      <h2 id="work-heading" class="section-title-plain">Cultural experiences with a public purpose.</h2>
+      <p class="lede">ICCL’s work extends beyond any single festival. We create credible, welcoming settings for cultural exchange, participation and belonging.</p>
     </div>
 
-    <div class="work-grid">
+    <div class="work-grid work-grid--asymmetric">
       <article class="work-item">
-        <span class="work-num">01 ·</span>
-        <h3>Festivals &amp; <em class="italic">public events</em></h3>
-        <p>We curate, produce and present free public festivals — bringing food, music and performance to parks and public spaces where everyone is welcome.</p>
+        <span class="work-num">01</span>
+        <h3>Festivals and public events</h3>
+        <p>ICCL creates welcoming public festivals that bring food, music, performance and cultural participation into shared community spaces.</p>
       </article>
       <article class="work-item">
-        <span class="work-num">02 ·</span>
-        <h3>Multicultural <em class="italic">community</em></h3>
-        <p>Programs that connect diverse Australian communities through shared meals, shared stages and the everyday rituals of cultural participation.</p>
+        <span class="work-num">02</span>
+        <h3>Multicultural community</h3>
+        <p>We connect communities through shared experiences that encourage cultural exchange, participation and belonging.</p>
       </article>
       <article class="work-item">
-        <span class="work-num">03 ·</span>
-        <h3>Arts, food &amp; <em class="italic">heritage</em></h3>
-        <p>Supporting artists, cooks and cultural practitioners — through performances, workshops, residencies and partnerships across Australia and overseas.</p>
+        <span class="work-num">03</span>
+        <h3>Arts, food and heritage</h3>
+        <p>We provide platforms for artists, cooks, performers and cultural practitioners to share living traditions with wider audiences.</p>
       </article>
     </div>
   </section>
 
-  <!-- Pull quote / principal object -->
-  <section class="quote">
+  <section class="quote" aria-labelledby="object-heading">
     <div class="quote-inner">
-      <p class="eyebrow" style="color: var(--saffron);">Our principal object</p>
+      <p class="section-label section-label--light">Our principal object</p>
+      <h2 id="object-heading" class="sr-only">ICCL’s principal constitutional object</h2>
       <blockquote>
-        To advance culture in Australia by curating, producing and presenting festivals, events and programs with a focus on arts, culture and heritage representing multicultural Australia — while <em>fostering intercultural understanding and social cohesion.</em>
+        To advance culture in Australia by curating, producing and presenting festivals, events and programs with a focus on arts, culture and heritage representing multicultural Australia — while fostering intercultural understanding and social cohesion.
       </blockquote>
-      <div class="quote-attr">— Constitution of Inhale Culture Celebrate Life Ltd · Adopted 27 August 2025</div>
+      <div class="quote-attr">Constitution of Inhale Culture Celebrate Life Ltd · Adopted 27 August 2025</div>
     </div>
   </section>
 
-  <!-- Contact strip -->
-  <section class="contact-strip">
+  <section class="contact-strip" aria-labelledby="contact-heading">
     <div class="contact-grid">
       <div>
-        <p class="eyebrow">Get in touch</p>
-        <h2>Sponsor, partner<br>or <em>say hello.</em></h2>
-        <p class="lede" style="margin-top: 1rem;">For sponsorship, partnership, media or general enquiries — we'd love to hear from you. ICCL is a volunteer-run charity, so please bear with us if a reply takes a day or two.</p>
-        <div class="hero-actions" style="margin-top: 1.25rem;">
-          <a href="about.html#contact" class="btn btn-primary">Contact ICCL <span class="ar">→</span></a>
+        <p class="section-label">Partnership and enquiries</p>
+        <h2 id="contact-heading" class="section-title-plain">Work with ICCL.</h2>
+        <p class="lede contact-intro">For sponsorship, partnership, media or general enquiries, contact our volunteer-led team.</p>
+        <div class="hero-actions">
+          <a href="{{ '/about.html#contact' | url }}" class="btn btn-primary">Contact ICCL <span class="ar" aria-hidden="true">→</span></a>
         </div>
       </div>
       <div>
@@ -218,10 +159,9 @@ sitemap_priority: "1.0"
             <a href="mailto:events@iccl.org.au">events@iccl.org.au</a>
           </div>
         </div>
-        <div class="label" style="margin-top:1.25rem;">Online</div>
-        <p style="font-size:0.95rem; color: var(--ink-soft);">
-          <a href="https://www.facebook.com/iccl.org.au" class="linky" target="_blank" rel="noopener noreferrer">facebook.com/iccl.org.au</a><br>
-          <a href="https://www.momofest.com.au" class="linky" target="_blank" rel="noopener noreferrer">momofest.com.au</a>
+        <div class="label contact-online-label">Online</div>
+        <p class="contact-online">
+          <a href="https://www.facebook.com/iccl.org.au" class="linky" target="_blank" rel="noopener noreferrer">ICCL on Facebook <span class="sr-only">(opens in a new tab)</span></a>
         </p>
       </div>
     </div>

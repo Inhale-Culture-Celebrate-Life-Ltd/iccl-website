@@ -1,0 +1,116 @@
+---
+permalink: festivals/index.html
+title: Festivals — ICCL
+description: ICCL’s portfolio of upcoming and previous public cultural festivals, including the Melbourne International Dumpling Festival and MOMO Fest Melbourne.
+og_type: website
+currentPage: festivals
+sitemap_priority: "0.9"
+---
+{% extends "base.njk" %}
+
+{% set upcomingFestival = festivals | findBySlug("melbourne-international-dumpling-festival-2026") %}
+
+{% block jsonld %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Festival",
+  "@id": "{{ canonical_url }}#midf-event",
+  "name": "{{ upcomingFestival.name }}",
+  "description": "{{ upcomingFestival.summary }}",
+  "startDate": "{{ upcomingFestival.startDate }}",
+  "endDate": "{{ upcomingFestival.endDate }}",
+  "eventStatus": "https://schema.org/EventScheduled",
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "location": {
+    "@type": "Place",
+    "name": "{{ upcomingFestival.venue }}",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "{{ upcomingFestival.streetAddress }}",
+      "addressLocality": "Melbourne",
+      "addressRegion": "VIC",
+      "postalCode": "3000",
+      "addressCountry": "AU"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": {{ upcomingFestival.latitude }},
+      "longitude": {{ upcomingFestival.longitude }}
+    }
+  },
+  "organizer": { "@id": "{{ organization_url }}#organization" },
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "url": "{{ upcomingFestival.registrationUrl }}",
+    "price": "0",
+    "priceCurrency": "AUD",
+    "availability": "https://schema.org/InStock"
+  }{% if upcomingFestival.siteUrl %},
+  "url": "{{ upcomingFestival.siteUrl }}"{% endif %}{% if upcomingFestival.image %},
+  "image": "{{ site.url }}{{ upcomingFestival.image | url }}"{% endif %},
+  "inLanguage": "en-AU"
+}
+</script>
+{% endblock %}
+
+{% block content %}
+  <header class="page-head">
+    <div class="page-head-inner">
+      <div>
+        <p class="breadcrumb"><a href="{{ '/' | url }}">ICCL</a> · Festivals</p>
+        <h1>Our<br><em>festivals.</em></h1>
+      </div>
+      <p class="page-head-meta">ICCL develops and presents distinct public festivals, each with its own identity, audience and channels.</p>
+    </div>
+  </header>
+
+  <section class="section festival-portfolio" aria-labelledby="upcoming-heading">
+    <div class="portfolio-group">
+      <div class="portfolio-group-heading">
+        <p class="section-label">Confirmed next</p>
+        <h2 id="upcoming-heading" class="section-title-plain">Upcoming</h2>
+      </div>
+      <div class="festival-list">
+        {% for festival in festivals %}
+          {% if festival.status == "upcoming" %}
+            {% include "festival-card.njk" %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="portfolio-group" aria-labelledby="previous-heading">
+      <div class="portfolio-group-heading">
+        <p class="section-label">Delivered by ICCL</p>
+        <h2 id="previous-heading" class="section-title-plain">Previous</h2>
+      </div>
+      <div class="festival-list">
+        {% for festival in festivals %}
+          {% if festival.status == "past" %}
+            {% include "festival-card.njk" %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section class="contact-strip" aria-labelledby="festival-contact-heading">
+    <div class="contact-grid contact-grid--compact">
+      <div>
+        <p class="section-label">Institutional enquiries</p>
+        <h2 id="festival-contact-heading" class="section-title-plain">Partnerships and media.</h2>
+        <p class="lede contact-intro">For ICCL partnership, sponsorship or media enquiries, contact the organisation directly.</p>
+      </div>
+      <div>
+        <div class="label">Events</div>
+        <p><a class="linky" href="mailto:events@iccl.org.au">events@iccl.org.au</a></p>
+      </div>
+      <div>
+        <div class="label">General</div>
+        <p><a class="linky" href="mailto:info@iccl.org.au">info@iccl.org.au</a></p>
+      </div>
+    </div>
+  </section>
+{% endblock %}

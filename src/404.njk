@@ -3,7 +3,6 @@ permalink: 404.html
 title: Page not found — ICCL
 description: Page not found on the ICCL website.
 currentPage: none
-nav_pill: momofest
 topbar: false
 noindex: true
 eleventyExcludeFromCollections: true
@@ -19,13 +18,9 @@ eleventyExcludeFromCollections: true
         The page you're looking for doesn't exist — or has moved as we redesigned the site.
       </p>
       <div style="display:inline-flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center;">
-        <a href="index.html" class="btn btn-primary">Back to home <span class="ar">→</span></a>
-        <a href="festival.html" class="btn btn-ghost">MOMO Fest 2026</a>
+        <a href="{{ '/' | url }}" class="btn btn-primary">Back to home <span class="ar" aria-hidden="true">→</span></a>
+        <a href="{{ '/festivals/' | url }}" class="btn btn-ghost">Explore festivals</a>
       </div>
     </div>
-  </div>
-
-  <div class="flagband" aria-hidden="true">
-    <span></span><span></span><span></span><span></span><span></span>
   </div>
 {% endblock %}

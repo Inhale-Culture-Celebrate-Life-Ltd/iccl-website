@@ -1,7 +1,18 @@
 // Site-wide constants used by templates, structured data, sitemap and robots.txt.
 // Change `url` here when switching between custom domain and the GitHub Pages preview URL.
+const deploymentPathPrefix = "/inhaleculturecelebratelife/";
+const isLocalServe = ["serve", "watch"].includes(
+  process.env.ELEVENTY_RUN_MODE,
+);
+
 module.exports = {
-  url: "https://iccl.org.au",
+  // `iccl.org.au` is not used until its TLS certificate and GitHub Pages
+  // custom-domain configuration are working. Internal URLs are passed through
+  // Eleventy's `url` filter. Local development is served from `/`; production
+  // retains the GitHub Pages project path.
+  url: "https://dhawalama.github.io",
+  deploymentPathPrefix,
+  pathPrefix: isLocalServe ? "/" : deploymentPathPrefix,
   name: "Inhale Culture Celebrate Life",
   shortName: "ICCL",
   legalName: "Inhale Culture Celebrate Life Ltd",
@@ -25,8 +36,7 @@ module.exports = {
     postcode: "3071",
     country: "AU",
   },
-  social: [
+  organizationProfiles: [
     "https://www.facebook.com/iccl.org.au",
-    "https://www.momofest.com.au",
   ],
 };

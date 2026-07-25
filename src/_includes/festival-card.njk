@@ -1,0 +1,74 @@
+<article class="festival-card festival-card--{{ festival.status }}" id="{{ festival.slug }}">
+  <div class="festival-card-media">
+    {% if festival.image %}
+      <img
+        class="festival-card-photo"
+        src="{{ festival.image | url }}"
+        alt="{{ festival.imageAlt }}"
+        width="1080"
+        height="1350"
+        loading="lazy"
+        decoding="async"
+      >
+    {% else %}
+      <div class="festival-type-panel" aria-hidden="true">
+        <span class="festival-type-panel__date">02 · 11 · 26</span>
+        <span class="festival-type-panel__word">Dumplings</span>
+        <span class="festival-type-panel__place">Queen Victoria Market · Melbourne</span>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="festival-card-body">
+    <p class="status-label status-label--{{ festival.status }}">
+      {% if festival.status == "upcoming" %}Upcoming festival · November 2026{% else %}Past festival · April 2026{% endif %}
+    </p>
+    <h3>{{ festival.name }}</h3>
+    <p class="festival-summary">{{ festival.summary }}</p>
+
+    <dl class="festival-details">
+      <div>
+        <dt>Date</dt>
+        <dd>{{ festival.displayDate }}</dd>
+      </div>
+      <div>
+        <dt>Time</dt>
+        <dd>{{ festival.displayTime }}</dd>
+      </div>
+      <div>
+        <dt>Venue</dt>
+        <dd>{{ festival.venue }} · {{ festival.location }}</dd>
+      </div>
+      <div>
+        <dt>Entry</dt>
+        <dd>{% if festival.isFree %}Free entry{% if festival.registrationRequired %} · online registration required{% endif %}{% endif %}</dd>
+      </div>
+    </dl>
+
+    <p class="festival-attribution">{{ festival.attribution }}</p>
+
+    <div class="festival-actions">
+      {% if festival.registrationUrl %}
+        <a class="btn btn-accent" href="{{ festival.registrationUrl }}" target="_blank" rel="noopener noreferrer">
+          Register free <span class="sr-only">on Eventbrite</span><span class="ar" aria-hidden="true">→</span>
+        </a>
+      {% endif %}
+      {% if festival.detailPath %}
+        <a class="btn btn-primary" href="{{ festival.detailPath | url }}">View festival record <span class="ar" aria-hidden="true">→</span></a>
+      {% endif %}
+      {% if festival.siteUrl %}
+        <a class="btn btn-ghost" href="{{ festival.siteUrl }}" target="_blank" rel="noopener noreferrer">
+          {{ festival.websiteLabel or "Visit the festival website" }} <span class="sr-only">(opens in a new tab)</span>
+        </a>
+      {% endif %}
+    </div>
+
+    {% if festival.facebookUrl or festival.facebookEventUrl or festival.instagramUrl %}
+      <nav class="festival-social" aria-label="{{ festival.name }} social links">
+        {% if festival.facebookUrl %}<a href="{{ festival.facebookUrl }}" target="_blank" rel="noopener noreferrer">Facebook page <span class="sr-only">(opens in a new tab)</span></a>{% endif %}
+        {% if festival.facebookEventUrl %}<a href="{{ festival.facebookEventUrl }}" target="_blank" rel="noopener noreferrer">Facebook event <span class="sr-only">(opens in a new tab)</span></a>{% endif %}
+        {% if festival.instagramUrl %}<a href="{{ festival.instagramUrl }}" target="_blank" rel="noopener noreferrer">Instagram <span class="sr-only">(opens in a new tab)</span></a>{% endif %}
+      </nav>
+    {% endif %}
+  </div>
+</article>

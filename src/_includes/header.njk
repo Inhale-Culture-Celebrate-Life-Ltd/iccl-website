@@ -1,28 +1,52 @@
+{% set upcomingFestival = festivals | findBySlug("melbourne-international-dumpling-festival-2026") %}
+{% set previousFestival = festivals | findBySlug("momo-fest-melbourne-2026") %}
 {% if topbar !== false %}
 <div class="topbar">
   <div class="topbar-inner">
-    <div><span class="dot"></span>{{ topbar_left | default("Registered Australian charity · ACNC &amp; ASIC compliant") | safe }}</div>
-    <div class="right">{{ topbar_right | default('<a href="festival.html">MOMO Fest Melbourne 2026 · Recap →</a>') | safe }}</div>
+    <div class="registration"><span class="dot"></span>Registered Australian charity · Australian public company</div>
+    <div class="right announcement">
+      <a href="{{ '/#upcoming-festival' | url }}">
+        Coming next: {{ upcomingFestival.name }} · 2 November 2026 · Queen Victoria Market <span aria-hidden="true">→</span>
+      </a>
+    </div>
   </div>
 </div>
 {% endif %}
 
 <nav class="nav" aria-label="Main">
   <div class="nav-inner">
-    <a href="index.html" class="nav-brand" aria-label="ICCL home">
-      <img src="assets/ICCL-Logo.png" alt="" width="939" height="523" decoding="async">     
+    <a href="{{ '/' | url }}" class="nav-brand" aria-label="ICCL home">
+      <img src="{{ '/assets/ICCL-Logo.png' | url }}" alt="" width="939" height="523" decoding="async">
     </a>
     <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
     <ul class="nav-links" id="primary-nav" role="list">
-      <li><a href="index.html"{% if currentPage == "home" %} class="current"{% endif %}>Home</a></li>
-      <li><a href="festival.html"{% if currentPage == "festival" %} class="current"{% endif %}>Festival</a></li>
-      <li><a href="about.html"{% if currentPage == "about" %} class="current"{% endif %}>About</a></li>
-      {% if nav_pill == "momofest" %}
-      <li><a href="festival.html" class="pill">MOMO Fest 2026 <span class="ar">→</span></a></li>
-      {% else %}
-      <li><a href="https://www.facebook.com/iccl.org.au" target="_blank" rel="noopener noreferrer" class="pill">Follow for updates <span class="ar">→</span></a></li>
+      <li><a href="{{ '/' | url }}"{% if currentPage == "home" %} class="current" aria-current="page"{% endif %}>Home</a></li>
+      <li class="nav-item nav-item--submenu">
+        <a href="{{ '/festivals/' | url }}"{% if currentPage == "festivals" %} class="current" aria-current="page"{% endif %}>Festivals</a>
+        <ul class="nav-submenu" aria-label="Festival links" role="list">
+          <li>
+            <a href="{{ ('/festivals/#' ~ upcomingFestival.slug) | url }}">
+              <span class="nav-submenu-kicker">Upcoming</span>
+              <span>{{ upcomingFestival.name }} 2026</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ previousFestival.detailPath | url }}">
+              <span class="nav-submenu-kicker">Previous</span>
+              <span>{{ previousFestival.name }}</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li><a href="{{ '/about.html' | url }}"{% if currentPage == "about" %} class="current" aria-current="page"{% endif %}>About</a></li>
+      {% if upcomingFestival.registrationUrl %}
+      <li>
+        <a href="{{ upcomingFestival.registrationUrl }}" target="_blank" rel="noopener noreferrer" class="pill">
+          Register free <span class="sr-only">on Eventbrite</span><span class="ar" aria-hidden="true">→</span>
+        </a>
+      </li>
       {% endif %}
     </ul>
   </div>

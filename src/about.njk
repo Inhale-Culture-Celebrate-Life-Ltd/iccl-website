@@ -4,8 +4,6 @@ title: About — Inhale Culture Celebrate Life (ICCL)
 description: About Inhale Culture Celebrate Life Ltd (ICCL) — purpose, board, team, governance and contact details. A registered Australian charity based in Thornbury, Victoria.
 og_type: website
 currentPage: about
-nav_pill: momofest
-topbar_right: ABN 94 690 672 694 · ACN 690 672 694
 sitemap_priority: "0.8"
 ---
 {% extends "base.njk" %}
@@ -21,8 +19,8 @@ sitemap_priority: "0.8"
       "url": "{{ canonical_url }}",
       "name": "{{ title }}",
       "description": "{{ description }}",
-      "isPartOf": { "@id": "{{ site.url }}/#website" },
-      "about": { "@id": "{{ site.url }}/#organization" },
+      "isPartOf": { "@id": "{{ organization_url }}#website" },
+      "about": { "@id": "{{ organization_url }}#organization" },
       "inLanguage": "en-AU",
       "breadcrumb": { "@id": "{{ canonical_url }}#breadcrumb" }
     },
@@ -34,7 +32,7 @@ sitemap_priority: "0.8"
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "{{ site.url }}/index.html"
+          "item": "{{ organization_url }}"
         },
         {
           "@type": "ListItem",
@@ -55,9 +53,7 @@ sitemap_priority: "0.8"
       position: sticky;
       top: 73px;
       z-index: 20;
-      background: rgba(251, 246, 238, 0.93);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      background: rgba(251, 246, 238, 0.98);
       border-bottom: 1px solid var(--line);
     }
     .anchor-nav-inner {
@@ -86,6 +82,18 @@ sitemap_priority: "0.8"
       transition: background 120ms ease, color 120ms ease;
     }
     .anchor-nav a:hover { background: var(--cream); color: var(--brand); }
+    @media (max-width: 720px) {
+      .anchor-nav-inner {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scrollbar-width: thin;
+        overscroll-behavior-inline: contain;
+      }
+      .anchor-nav-inner .label,
+      .anchor-nav a {
+        flex: 0 0 auto;
+      }
+    }
 
     .purpose {
       max-width: var(--content);
@@ -218,7 +226,7 @@ sitemap_priority: "0.8"
   <header class="page-head">
     <div class="page-head-inner">
       <div>
-        <div class="breadcrumb"><a href="index.html">ICCL</a> · About</div>
+        <div class="breadcrumb"><a href="{{ '/' | url }}">ICCL</a> · About</div>
         <h1>About<br><em>ICCL.</em></h1>
       </div>
       <div class="page-head-meta">
@@ -226,10 +234,6 @@ sitemap_priority: "0.8"
       </div>
     </div>
   </header>
-
-  <div class="flagband" aria-hidden="true">
-    <span></span><span></span><span></span><span></span><span></span>
-  </div>
 
   <!-- Purpose -->
   <section class="section" id="purpose">
@@ -256,8 +260,8 @@ sitemap_priority: "0.8"
   <section class="section" id="scope" style="background: var(--cream);">
     <div class="section-head">
       <div>
-        <p class="eyebrow">Our scope</p>
-        <h2>What we're<br>set up <em>to do.</em></h2>
+        <p class="section-label">Our constitutional scope</p>
+        <h2 class="section-title-plain">What ICCL is set up to do.</h2>
       </div>
       <p class="lede">Our constitution authorises a broad range of cultural, educational, artistic and community activities. These define our capacity — not all are active yet. As a new organisation with one confirmed festival, we'll grow into the rest deliberately.</p>
     </div>
@@ -302,27 +306,24 @@ sitemap_priority: "0.8"
   <section class="section" id="board">
     <div class="section-head">
       <div>
-        <p class="eyebrow">Leadership</p>
-        <h2>Board of<br><em>Directors.</em></h2>
+        <p class="section-label">Leadership</p>
+        <h2 class="section-title-plain">Board of Directors</h2>
       </div>
       <p class="lede">ICCL is governed by a voluntary board of directors. Directors must be members of ICCL and serve without remuneration. The board currently has three members — the minimum required under our constitution.</p>
     </div>
 
     <div class="board">
       <article class="board-card">
-        <div class="initials" aria-hidden="true">DL</div>
         <h3>Dhawa Tshering Lama</h3>
         <p class="role">Director &amp; Company Secretary</p>
         <a class="email" href="mailto:dhawa.lama@iccl.org.au">dhawa.lama@iccl.org.au</a>
       </article>
       <article class="board-card">
-        <div class="initials" aria-hidden="true">DR</div>
         <h3>Deepa Rai</h3>
         <p class="role">Director</p>
         <a class="email" href="mailto:deepa.rai@iccl.org.au">deepa.rai@iccl.org.au</a>
       </article>
       <article class="board-card">
-        <div class="initials" aria-hidden="true">NM</div>
         <h3>Norgen Norboo Moktan</h3>
         <p class="role">Director &amp; Public Officer</p>
         <a class="email" href="mailto:norgen.norboo@iccl.org.au">norgen.norboo@iccl.org.au</a>
@@ -334,21 +335,19 @@ sitemap_priority: "0.8"
   <section class="section" id="team" style="background: var(--cream);">
     <div class="section-head">
       <div>
-        <p class="eyebrow">Executive team</p>
-        <h2>Operations<br>&amp; <em>festival delivery.</em></h2>
+        <p class="section-label">Executive team</p>
+        <h2 class="section-title-plain">Operations and festival delivery</h2>
       </div>
       <p class="lede">Day-to-day operations and festival delivery are led by our executive team, working under the board's delegated authority.</p>
     </div>
 
     <div class="board">
       <article class="board-card">
-        <div class="initials" aria-hidden="true">RS</div>
         <h3>Raju Shakya</h3>
         <p class="role">Chief Executive Officer</p>
         <a class="email" href="mailto:raju.shakya@iccl.org.au">raju.shakya@iccl.org.au</a>
       </article>
       <article class="board-card">
-        <div class="initials" aria-hidden="true">MH</div>
         <h3>Manij Hada</h3>
         <p class="role">Event Manager</p>
         <a class="email" href="mailto:manij.hada@iccl.org.au">manij.hada@iccl.org.au</a>
@@ -360,8 +359,8 @@ sitemap_priority: "0.8"
   <section class="section" id="governance">
     <div class="section-head">
       <div>
-        <p class="eyebrow">Governance</p>
-        <h2>The legal<br><em>basics.</em></h2>
+        <p class="section-label">Governance</p>
+        <h2 class="section-title-plain">Registration and governance</h2>
       </div>
       <p class="lede">ICCL is an Australian public company limited by guarantee, registered with both ASIC and the ACNC. Use the details below for grants, sponsorship or formal correspondence — and read the full constitution for the rules that govern us.</p>
     </div>
@@ -393,7 +392,7 @@ sitemap_priority: "0.8"
           <h3>Our constitution</h3>
           <p>The full governing document of Inhale Culture Celebrate Life Ltd — including objects, membership rules, board powers, financial management and the not-for-profit clauses. Adopted 27 August 2025.</p>
         </div>
-        <a class="btn btn-primary" href="Constitution%20of%20Inhale%20Culture%20Celebrate%20Life%20Ltd%20%28ICCL%29%20-%202025.pdf" target="_blank" rel="noopener noreferrer">
+        <a class="btn btn-primary" href="{{ '/Constitution%20of%20Inhale%20Culture%20Celebrate%20Life%20Ltd%20%28ICCL%29%20-%202025.pdf' | url }}" target="_blank" rel="noopener noreferrer">
           Download PDF <span class="ar">→</span>
         </a>
       </div>
@@ -404,8 +403,8 @@ sitemap_priority: "0.8"
   <section class="contact-strip" id="contact">
     <div class="contact-grid">
       <div>
-        <p class="eyebrow">Contact</p>
-        <h2>Get in<br><em>touch.</em></h2>
+        <p class="section-label">Contact</p>
+        <h2 class="section-title-plain">Get in touch</h2>
         <p class="lede" style="margin-top: 1rem;">For general enquiries, sponsorship, partnership, vendor applications or media requests — email us or reach out on Facebook. We are volunteer-run; please bear with us if a reply takes a day or two.</p>
         <div class="hero-actions" style="margin-top: 1.25rem;">
           <a href="mailto:info@iccl.org.au" class="btn btn-primary">Email ICCL <span class="ar">→</span></a>

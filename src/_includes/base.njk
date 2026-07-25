@@ -1,16 +1,16 @@
-{%- set canonical_url = canonical_url or (site.url + page.url) -%}
+{%- set canonical_route = canonical_path or page.url -%}
+{%- set canonical_url = canonical_url or (site.url ~ (canonical_route | url)) -%}
 {%- set page_og_title = og_title or title -%}
 {%- set page_og_description = og_description or description -%}
-{%- set page_og_image = (site.url + (og_image or site.socialImage)) -%}
+{%- set page_og_image = site.url ~ ((og_image or site.socialImage) | url) -%}
+{%- set organization_url = site.url ~ ("/" | url) -%}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-AU">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; script-src 'self'; frame-ancestors 'none';">
-  <meta http-equiv="X-Frame-Options" content="DENY">
-  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; script-src 'self';">
   <meta name="referrer" content="strict-origin-when-cross-origin">
 
   <title>{% block title %}{{ title }}{% endblock %}</title>
@@ -19,8 +19,8 @@
   {% if noindex %}<meta name="robots" content="noindex,follow">{% endif %}
 
   <!-- Icons -->
-  <link rel="icon" href="assets/ICCL-Logo.png">
-  <link rel="apple-touch-icon" href="assets/ICCL-Logo.png">
+  <link rel="icon" href="{{ '/assets/ICCL-Logo.png' | url }}">
+  <link rel="apple-touch-icon" href="{{ '/assets/ICCL-Logo.png' | url }}">
 
   <!-- Open Graph -->
   <meta property="og:site_name" content="{{ site.name }}">
@@ -41,7 +41,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="{{ '/styles.css' | url }}">
 
   {% block head_extra %}{% endblock %}
 
@@ -52,15 +52,26 @@
     "@graph": [
       {
         "@type": "NGO",
-        "@id": "{{ site.url }}/#organization",
+        "@id": "{{ organization_url }}#organization",
         "name": "{{ site.legalName }}",
         "alternateName": "{{ site.shortName }}",
-        "url": "{{ site.url }}/",
-        "logo": "{{ site.url }}{{ site.logo }}",
+        "url": "{{ organization_url }}",
+        "logo": "{{ site.url }}{{ site.logo | url }}",
         "description": "{{ site.description }}",
         "foundingDate": "{{ site.founded }}",
         "email": "{{ site.email.general }}",
-        "taxID": "{{ site.abn }}",
+        "identifier": [
+          {
+            "@type": "PropertyValue",
+            "propertyID": "ABN",
+            "value": "{{ site.abn }}"
+          },
+          {
+            "@type": "PropertyValue",
+            "propertyID": "ACN",
+            "value": "{{ site.acn }}"
+          }
+        ],
         "address": {
           "@type": "PostalAddress",
           "streetAddress": "{{ site.address.street }}",
@@ -86,16 +97,16 @@
           }
         ],
         "sameAs": [
-          {%- for link in site.social %}"{{ link }}"{% if not loop.last %}, {% endif %}{% endfor %}
+          {%- for link in site.organizationProfiles %}"{{ link }}"{% if not loop.last %}, {% endif %}{% endfor %}
         ]
       },
       {
         "@type": "WebSite",
-        "@id": "{{ site.url }}/#website",
-        "url": "{{ site.url }}/",
+        "@id": "{{ organization_url }}#website",
+        "url": "{{ organization_url }}",
         "name": "{{ site.name }}",
         "description": "{{ site.description }}",
-        "publisher": { "@id": "{{ site.url }}/#organization" },
+        "publisher": { "@id": "{{ organization_url }}#organization" },
         "inLanguage": "en-AU"
       }
     ]
@@ -106,6 +117,8 @@
 </head>
 <body>
 
+  <a class="skip-link" href="#main">Skip to main content</a>
+
   {% include "header.njk" %}
 
   <main id="main">
@@ -114,6 +127,6 @@
 
   {% include "footer.njk" %}
 
-  <script src="nav.js"></script>
+  <script src="{{ '/nav.js' | url }}"></script>
 </body>
 </html>

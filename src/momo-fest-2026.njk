@@ -1,0 +1,92 @@
+---
+permalink: festivals/momo-fest-2026/index.html
+title: MOMO Fest Melbourne 2026 — ICCL festival record
+description: ICCL presented MOMO Fest Melbourne at Footscray Park on 11 and 12 April 2026.
+og_type: event
+og_image: /assets/Momofest-image.jpg
+currentPage: festivals
+sitemap_priority: "0.7"
+---
+{% extends "base.njk" %}
+
+{% set festival = festivals | findBySlug("momo-fest-melbourne-2026") %}
+
+{% block jsonld %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Festival",
+  "@id": "{{ canonical_url }}#event",
+  "name": "{{ festival.name }}",
+  "description": "{{ festival.summary }}",
+  "startDate": "{{ festival.startDate }}",
+  "endDate": "{{ festival.endDate }}",
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "location": {
+    "@type": "Place",
+    "name": "{{ festival.venue }}",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "{{ festival.streetAddress }}",
+      "addressLocality": "Footscray",
+      "addressRegion": "VIC",
+      "postalCode": "3011",
+      "addressCountry": "AU"
+    }
+  },
+  "organizer": { "@id": "{{ organization_url }}#organization" },
+  "isAccessibleForFree": true,
+  "url": "{{ canonical_url }}",
+  "image": "{{ site.url }}{{ festival.image | url }}",
+  "inLanguage": "en-AU"
+}
+</script>
+{% endblock %}
+
+{% block content %}
+  <header class="record-hero">
+    <div class="record-hero-grid">
+      <div class="record-hero-copy">
+        <p class="breadcrumb"><a href="{{ '/festivals/' | url }}">Festivals</a> · Previous</p>
+        <p class="past-banner">Past festival · April 2026</p>
+        <h1>MOMO Fest<br>Melbourne <em>2026</em></h1>
+        <p class="lede">{{ festival.summary }}</p>
+        <p class="festival-attribution">{{ festival.attribution }}</p>
+        <div class="hero-actions">
+          {% if festival.siteUrl %}
+          <a href="{{ festival.siteUrl }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            Visit the MOMO Fest website <span class="sr-only">(opens in a new tab)</span><span class="ar" aria-hidden="true">→</span>
+          </a>
+          {% endif %}
+          <a href="{{ '/festivals/' | url }}" class="btn btn-ghost">All ICCL festivals</a>
+        </div>
+      </div>
+      <div class="record-hero-media">
+        {% responsiveImage festival.image, festival.imageAlt, "(max-width: 900px) 100vw, 48vw", "record-photo", "eager", "high" %}
+      </div>
+    </div>
+  </header>
+
+  <section class="record-facts" aria-label="MOMO Fest Melbourne 2026 details">
+    <dl>
+      <div><dt>Date</dt><dd>{{ festival.displayDate }}</dd></div>
+      <div><dt>Time</dt><dd>{{ festival.displayTime }}</dd></div>
+      <div><dt>Venue</dt><dd>{{ festival.venue }} · {{ festival.location }}</dd></div>
+      <div><dt>Entry</dt><dd>Free public festival</dd></div>
+    </dl>
+  </section>
+
+  <section class="section record-summary" aria-labelledby="delivered-heading">
+    <div>
+      <p class="section-label">Festival record</p>
+      <h2 id="delivered-heading" class="section-title-plain">What ICCL delivered.</h2>
+    </div>
+    <div class="record-summary-copy">
+      <p class="lede">{{ festival.summary }}</p>
+      <p>This institutional record confirms what was delivered, where and when. Festival-specific coverage and information remain on the MOMO Fest website.</p>
+      {% if festival.siteUrl %}
+      <p><a class="linky" href="{{ festival.siteUrl }}" target="_blank" rel="noopener noreferrer">Visit momofest.com.au <span class="sr-only">(opens in a new tab)</span></a></p>
+      {% endif %}
+    </div>
+  </section>
+{% endblock %}

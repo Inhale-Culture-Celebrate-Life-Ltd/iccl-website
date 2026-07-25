@@ -1,3 +1,5 @@
+{% set upcomingFestival = festivals | findBySlug("melbourne-international-dumpling-festival-2026") %}
+{% set momoFestival = festivals | findBySlug("momo-fest-melbourne-2026") %}
 <footer class="footer" aria-label="Site footer">
   <div class="footer-inner">
     <div class="footer-brand">
@@ -5,20 +7,29 @@
       <p>{{ footer_blurb | default("Inhale Culture Celebrate Life Ltd is a registered Australian charity and public company limited by guarantee, advancing culture through multicultural arts, food and community programming.") | safe }}</p>
     </div>
     <div>
-      <h4>Navigate</h4>
+      <h2 class="footer-heading">Navigate</h2>
       <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="festival.html">MOMO Fest 2026</a></li>
-        <li><a href="about.html">About ICCL</a></li>
-        <li><a href="about.html#governance">Governance</a></li>
-        <li><a href="about.html#contact">Contact</a></li>
+        <li><a href="{{ '/' | url }}">Home</a></li>
+        <li><a href="{{ '/festivals/' | url }}">Festivals</a></li>
+        <li><a href="{{ '/about.html' | url }}">About ICCL</a></li>
+        <li><a href="{{ '/about.html#governance' | url }}">Governance</a></li>
+        <li><a href="{{ '/about.html#contact' | url }}">Contact</a></li>
       </ul>
     </div>
     <div>
-      <h4>Follow</h4>
+      <h2 class="footer-heading">Our festivals</h2>
+      <ul>
+        <li><a href="{{ ('/festivals/#' ~ upcomingFestival.slug) | url }}">{{ upcomingFestival.name }}</a></li>
+        <li><a href="{{ momoFestival.detailPath | url }}">{{ momoFestival.name }}</a></li>
+        {% if momoFestival.siteUrl %}
+        <li><a href="{{ momoFestival.siteUrl }}" target="_blank" rel="noopener noreferrer">MOMO Fest website <span class="sr-only">(opens in a new tab)</span></a></li>
+        {% endif %}
+      </ul>
+    </div>
+    <div>
+      <h2 class="footer-heading">Follow</h2>
       <ul>
         <li><a href="https://www.facebook.com/iccl.org.au" target="_blank" rel="noopener noreferrer">Facebook</a></li>
-        <li><a href="https://www.momofest.com.au" target="_blank" rel="noopener noreferrer">MOMO Fest site</a></li>
       </ul>
     </div>
   </div>
