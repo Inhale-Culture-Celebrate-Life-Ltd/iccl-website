@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const outputRoot = path.join(projectRoot, "_site");
-const pathPrefix = "/inhaleculturecelebratelife/";
+const pathPrefix = "/";
 const errors = [];
 
 async function walk(directory) {

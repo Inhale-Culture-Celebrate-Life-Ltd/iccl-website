@@ -24,7 +24,7 @@ server root.
 npm run preview
 ```
 
-Open `http://127.0.0.1:4173/inhaleculturecelebratelife/`. This rebuilds and
+Open `http://127.0.0.1:4173/`. This rebuilds and
 serves the exact GitHub Pages path structure. Do not open `_site/index.html`
 directly: the production build intentionally uses the repository path prefix.
 
